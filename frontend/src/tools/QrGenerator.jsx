@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API_BASE } from '../config';
 
 export default function QrGenerator() {
   const [text, setText] = useState('');
@@ -12,7 +13,7 @@ export default function QrGenerator() {
     if (!text.trim()) { setError('Please enter text or URL'); return; }
     setLoading(true);
     try {
-      const res = await fetch('/api/qrcode/generate', {
+      const res = await fetch(`${API_BASE}/api/qrcode/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text, width: size }),

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API_BASE } from '../config';
 
 export default function HashGenerator() {
   const [input, setInput] = useState('');
@@ -11,7 +12,7 @@ export default function HashGenerator() {
     if (!input) { setError('Please enter text to hash'); return; }
     setLoading(true);
     try {
-      const res = await fetch('/api/hash/generate', {
+      const res = await fetch(`${API_BASE}/api/hash/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: input }),

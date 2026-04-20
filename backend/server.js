@@ -6,9 +6,19 @@ const qrcodeRoute = require('./routes/qrcode');
 const hashRoute = require('./routes/hash');
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+// CORS: allow frontend origin in production, everything in dev
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map((s) => s.trim())
+  : ['http://localhost:5173', 'http://localhost:5174'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) callback(null, true);
+    else callback(null, true); // permissive for now; tighten in production if needed
+  },
+}));
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 

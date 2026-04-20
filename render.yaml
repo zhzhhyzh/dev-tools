@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: devtools-api
+    runtime: node
+    region: singapore
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGIN
+        sync: false  # Set manually after Vercel deploy

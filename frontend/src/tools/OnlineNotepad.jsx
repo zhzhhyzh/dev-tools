@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { API_BASE, getWsUrl } from '../config';
 
 function generateId() {
   return Math.random().toString(36).substring(2, 10);
@@ -25,8 +26,7 @@ export default function OnlineNotepad() {
       wsRef.current = null;
     }
 
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${protocol}//${window.location.host}/ws/notepad`;
+    const wsUrl = getWsUrl('/ws/notepad');
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 
@@ -105,7 +105,7 @@ export default function OnlineNotepad() {
 
   const loadPadList = async () => {
     try {
-      const res = await fetch('/api/notepad-list');
+      const res = await fetch(`${API_BASE}/api/notepad-list`);
       const data = await res.json();
       setPadList(data);
       setShowPadList(true);
