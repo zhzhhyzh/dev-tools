@@ -1,18 +1,47 @@
+/* === Dashboard === */
 .dashboard {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 32px 24px;
+  padding: 0 24px 48px;
+}
+
+/* === Hero Section === */
+.dashboard-hero {
+  position: relative;
+  padding: 48px 0 32px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.dashboard-hero-glow {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 300px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(108, 99, 255, 0.15) 0%,
+    rgba(167, 139, 250, 0.05) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  animation: gradientShift 8s ease infinite;
+  background-size: 200% 200%;
 }
 
 .dashboard-brand {
-  text-align: center;
+  position: relative;
   margin-bottom: 32px;
+  animation: fadeInUp 0.5s ease-out both;
 }
 
 .dashboard-brand h1 {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--accent), #a78bfa);
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #fff 0%, #a78bfa 50%, #6c63ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -22,29 +51,36 @@
 .dashboard-brand p {
   color: var(--text-secondary);
   font-size: 16px;
+  font-weight: 400;
 }
 
+/* === Search Bar === */
 .search-bar {
   position: relative;
-  max-width: 560px;
+  max-width: 480px;
   margin: 0 auto 24px;
+  animation: fadeInUp 0.5s ease-out 0.1s both;
 }
 
 .search-bar input {
   width: 100%;
-  padding: 14px 18px 14px 46px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
+  padding: 14px 18px 14px 48px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
   color: var(--text-primary);
   font-size: 15px;
+  font-weight: 400;
   transition: all var(--transition);
 }
 
 .search-bar input:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
+  border-color: rgba(108, 99, 255, 0.4);
+  box-shadow: 0 0 0 4px var(--accent-glow), 0 4px 24px rgba(0, 0, 0, 0.2);
+  background: var(--glass-bg-hover);
 }
 
 .search-bar input::placeholder {
@@ -53,54 +89,111 @@
 
 .search-icon {
   position: absolute;
-  left: 16px;
+  left: 18px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--text-muted);
-  font-size: 18px;
   pointer-events: none;
 }
 
+.search-clear {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.search-clear:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+}
+
+/* === Filter Bar === */
 .filter-bar {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 32px;
+  margin-bottom: 8px;
+  animation: fadeInUp 0.5s ease-out 0.2s both;
 }
 
 .filter-chip {
-  padding: 6px 16px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
+  padding: 8px 18px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
   color: var(--text-secondary);
   font-size: 13px;
   font-weight: 500;
-  transition: all var(--transition);
+  transition: all var(--spring);
+  letter-spacing: 0.2px;
 }
 
 .filter-chip:hover {
-  border-color: var(--accent);
+  border-color: var(--border-color-hover);
   color: var(--text-primary);
+  background: var(--glass-bg-hover);
+  transform: scale(1.04);
+}
+
+.filter-chip:active {
+  transform: scale(0.96);
 }
 
 .filter-chip.active {
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
+  box-shadow: 0 2px 12px var(--accent-glow-strong);
 }
 
-.tools-grid {
+.filter-chip.active:hover {
+  background: var(--accent-hover);
+  transform: scale(1.04);
+}
+
+/* === Bento Grid === */
+.bento-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-brand h1 {
+    font-size: 28px;
+  }
 }
 
 .no-results {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 48px 0;
+  padding: 64px 0;
   color: var(--text-muted);
   font-size: 15px;
+  animation: fadeInUp 0.4s ease-out both;
 }
