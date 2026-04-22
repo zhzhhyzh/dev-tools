@@ -1,8 +1,69 @@
 /* === Dashboard === */
 .dashboard {
+  position: relative;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px 48px;
+}
+
+/* Diagonal neon text watermark background - covers entire viewport */
+.dashboard-watermark {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dashboard-watermark-inner {
+  position: absolute;
+  top: -75%;
+  left: -75%;
+  width: 250%;
+  height: 250%;
+  transform: rotate(-45deg);
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 20px 40px;
+  user-select: none;
+}
+
+.dashboard-watermark span {
+  font-size: 16px;
+  font-weight: 900;
+  white-space: nowrap;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: linear-gradient(
+    135deg,
+    #ff00ff 0%,
+    #00ffff 25%,
+    #6c63ff 50%,
+    #ff00ff 75%,
+    #00ffff 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.06;
+  animation: neonShift 6s linear infinite;
+  filter: blur(0.3px);
+}
+
+.dashboard-watermark span:nth-child(odd) {
+  opacity: 0.08;
+  animation-duration: 8s;
+  animation-direction: reverse;
+}
+
+@keyframes neonShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 /* === Hero Section === */
@@ -10,25 +71,7 @@
   position: relative;
   padding: 48px 0 32px;
   text-align: center;
-  overflow: hidden;
-}
-
-.dashboard-hero-glow {
-  position: absolute;
-  top: -80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 300px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(108, 99, 255, 0.15) 0%,
-    rgba(167, 139, 250, 0.05) 40%,
-    transparent 70%
-  );
-  pointer-events: none;
-  animation: gradientShift 8s ease infinite;
-  background-size: 200% 200%;
+  z-index: 1;
 }
 
 .dashboard-brand {
@@ -168,8 +211,10 @@
 
 /* === Bento Grid === */
 .bento-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
 }
 

@@ -139,35 +139,9 @@
   background: var(--accent-glow-strong);
 }
 
-/* === Bento sizes === */
-.bento-sm {
-  min-height: 200px;
-}
-
-.bento-md {
-  min-height: 220px;
-}
-
-.bento-lg {
-  grid-column: span 2;
-  min-height: 200px;
-}
-
-.bento-lg .bento-card-icon {
-  font-size: 42px;
-}
-
-.bento-lg .bento-card-name {
-  font-size: 18px;
-}
-
-.bento-lg .bento-card-desc {
-  font-size: 14px;
-}
-
-/* Responsive: collapse large cards on small screens */
+/* Responsive */
 @media (max-width: 700px) {
-  .bento-lg {
-    grid-column: span 1;
+  .bento-card {
+    min-height: auto;
   }
 }

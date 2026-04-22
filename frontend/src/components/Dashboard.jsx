@@ -3,14 +3,6 @@ import { tools, categories } from '../tools/toolsRegistry';
 import ToolCard from './ToolCard';
 import './Dashboard.css';
 
-// Assign bento sizes: first 2 tools = lg, next 4 = md, rest = sm
-function getBentoSize(index, total) {
-  if (total <= 4) return 'sm';
-  if (index < 2) return 'lg';
-  if (index < 6) return 'md';
-  return 'sm';
-}
-
 export default function Dashboard() {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
@@ -28,11 +20,21 @@ export default function Dashboard() {
     });
   }, [search, activeCategory]);
 
+  const watermarkText = 'zhzhhyzh Dev Tools Hub';
+  const watermarkCount = 150;
+
   return (
     <div className="dashboard">
-      {/* Animated gradient header area */}
+      {/* Diagonal neon repeating text watermark */}
+      <div className="dashboard-watermark">
+        <div className="dashboard-watermark-inner">
+          {Array.from({ length: watermarkCount }, (_, i) => (
+            <span key={i}>{watermarkText}</span>
+          ))}
+        </div>
+      </div>
+
       <div className="dashboard-hero">
-        <div className="dashboard-hero-glow" />
         <div className="dashboard-brand">
           <h1>DevTools Hub</h1>
           <p>All the developer utilities you need, in one place</p>
@@ -81,7 +83,6 @@ export default function Dashboard() {
               key={tool.id}
               tool={tool}
               index={i}
-              size={getBentoSize(i, filtered.length)}
             />
           ))
         )}
